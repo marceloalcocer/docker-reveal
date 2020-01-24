@@ -7,11 +7,21 @@
 build_dir="./.build"
 dockerfile="Dockerfile"
 tag="reveal"
+port="8000"
 
 # Build image
 if [ "${1}" == "build" ]; then
   shift
   docker image build "${build_dir}" --file "${dockerfile}" --tag "${tag}" --rm --compress $*
+
+# Run image
+elif [ "${1}" == "run" ]; then
+  shift
+  for content in $*; do
+    path="$(realpath -e ${content})"
+    mounts+=("--mount type=bind,source=${path},target=/reveal.js/${content##*/},readonly")
+  done
+  docker run --rm -d --init -p ${port}:8000 ${mounts[@]} reveal
 
 # Display usage
 else
@@ -21,6 +31,8 @@ else
   echo "Commands:"
   echo "  build [OPTS]    Build image. All further arguments are passed"
   echo "                  directly to docker image build"
+  echo "  run FILES       Mount FILES to container's /reveal.js directory and"
+  echo "                  serve from port 8000"
   echo ""
   echo "Full source: https://github.com/marceloalcocer/docker-reveal"
 fi

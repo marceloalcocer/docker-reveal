@@ -62,11 +62,11 @@ E.g.
 ```sh
 $ docker run \
     --init \
-    -p 8080:8000 \
+    -p 8000:8000 \
     reveal
 ```
 
-serves the presentation from `http://<HOST>:8080`
+serves the presentation from `http://<HOST>:8000`
 
 ### Presentation contents
 
@@ -77,10 +77,20 @@ E.g.
 ```sh
 $ docker run \
     --init \
-    -p 8080:8000 \
+    -p 8000:8000 \
     --mount type=bind,source=/my/presentation/index.html,target/reveal.js/index.html \
     --mount type=bind,source=/my/presentation/custom.css,target/reveal.js/custom.css \
     reveal
 ```
 
-serves the presentation comprised of `index.html` and `custom.css` from `http://<HOST>:8080`
+serves the presentation comprised of `index.html` and `custom.css` from `http://<HOST>:8000`
+
+The supplied helper script [reveal](./reveal) can be used to mount multiple files in this way.
+
+E.g.
+
+```sh
+$ ./reveal run index.html ../../custom.css /path/to/dir
+```
+
+bind mounts `index.html`, `custom.css` and `dir` to the container's `/reveal.js` directory.

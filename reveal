@@ -9,6 +9,13 @@ dockerfile="Dockerfile"
 tag="reveal"
 port="8000"
 
+append_mounts(){
+  for content in $*; do
+    path="$(realpath -e ${content})"
+    mounts+=("--mount type=bind,source=${path},target=/reveal.js/${content##*/},readonly")
+  done
+}
+
 # Build image
 if [ "${1}" == "build" ]; then
   shift
@@ -17,11 +24,16 @@ if [ "${1}" == "build" ]; then
 # Run image
 elif [ "${1}" == "run" ]; then
   shift
-  for content in $*; do
-    path="$(realpath -e ${content})"
-    mounts+=("--mount type=bind,source=${path},target=/reveal.js/${content##*/},readonly")
-  done
+  mounts=
+  append_mounts $*
   docker run --rm -d --init -p ${port}:8000 ${mounts[@]} reveal
+
+# Debug image
+elif [ "${1}" == "debug" ]; then
+  shift
+  mounts=
+  append_mounts $*
+  docker run --rm --init -p ${port}:8000 ${mounts[@]} -it --entrypoint="/bin/ash" reveal
 
 # Display usage
 else
@@ -33,6 +45,8 @@ else
   echo "                  directly to docker image build"
   echo "  run FILES       Mount FILES to container's /reveal.js directory and"
   echo "                  serve from port 8000"
+  echo "  debug FILES     Mount FILES to container's /reveal.js directory and"
+  echo "                  initiate interactive shell session"
   echo ""
   echo "Full source: https://github.com/marceloalcocer/docker-reveal"
 fi

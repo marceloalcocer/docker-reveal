@@ -11,6 +11,7 @@ Dockerized [reveal.js](https://github.com/hakimel/reveal.js/) presentation frame
     * [Signal handling](#signal-handling)
     * [Exposed ports](#exposed-ports)
     * [Presentation contents](#presentation-contents)
+    * [Debugging](#debugging)
 
 
 ## Building
@@ -94,3 +95,11 @@ $ ./reveal run index.html ../../custom.css /path/to/dir
 ```
 
 bind mounts `index.html`, `custom.css` and `dir` to the container's `/reveal.js` directory.
+
+### Debugging
+
+The supplied helper script [reveal](./reveal) can be used to start an interactive shell (`ash`) session in the container for debugging purposes,
+
+```sh
+$ ./reveal debug index.html ../../custom.css /path/to/dir
+```

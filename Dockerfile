@@ -7,7 +7,8 @@
 
 # Source fetch stage
 # -------------------
-FROM alpine:3.11 AS fetch
+ARG VERSION_ALPINE=3.11
+FROM alpine:$VERSION_ALPINE as fetch
 
 # Image arguments
 ARG VERSION_REVEAL=3.8.0
@@ -34,8 +35,8 @@ RUN \
 
 # Build stage
 # ------------
-FROM node:10-alpine3.11 AS build
-# FROM node:11-alpine3.11 AS build           # node > 11 doesn't seem to work 😞
+FROM node:10-alpine$VERSION_ALPINE AS build
+# FROM node:11-alpine$VERSION_ALPINE AS build        # node > 10 doesn't work 😞
 
 # Copy source
 COPY --from=fetch reveal.js reveal.js
@@ -57,7 +58,7 @@ RUN chown -R node:node reveal.js
 
 # Package stage
 # --------------
-FROM node:10-alpine3.11 AS package
+FROM node:10-alpine$VERSION_ALPINE AS package
 
 # Metadata
 LABEL description="reveal.js presentation framework with baked in MathJax installation"

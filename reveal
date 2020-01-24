@@ -1,0 +1,26 @@
+#!/bin/bash
+#
+#   Helper script for building, running and debugging reveal.js Docker image
+#
+
+# Build variables
+build_dir="./.build"
+dockerfile="Dockerfile"
+tag="reveal"
+
+# Build image
+if [ "${1}" == "build" ]; then
+  shift
+  docker image build "${build_dir}" --file "${dockerfile}" --tag "${tag}" --rm --compress $*
+
+# Display usage
+else
+  echo "Usage: reveal [COMMAND]..."
+  echo "Dockerized reveal.js helper script"
+  echo ""
+  echo "Commands:"
+  echo "  build [OPTS]    Build image. All further arguments are passed"
+  echo "                  directly to docker image build"
+  echo ""
+  echo "Full source: https://github.com/marceloalcocer/docker-reveal"
+fi

@@ -21,6 +21,14 @@ Build the image from the [Dockerfile](./Dockerfile), e.g.
 $ docker image build
 ```
 
+The supplied helper script [reveal](./reveal) can also be used to set sensible build options, e.g. empty build context, image tag, compression, etc.
+
+```sh
+$ ./reveal build
+```
+
+All further arguments to `reveal build` are passed directly to `docker image build`.
+
 ### Build arguments
 
 Argument           | Default | Description

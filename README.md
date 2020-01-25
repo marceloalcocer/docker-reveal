@@ -34,7 +34,7 @@ All further arguments to `reveal build` are passed directly to `docker image bui
 
 Argument           | Default | Description
 -------------------|---------|-------------------------------------------------------------------
-`VERSION_ALPINE`   | 3.11    | Base [alpine image version](https://hub.docker.com/_/alpine). Must have corresponding [node.js image](https://hub.docker.com/_/node?tab=description)
+`VERSION_ALPINE`   | 3.11    | Base [alpine image version](https://hub.docker.com/_/alpine). Must have corresponding [node.js image](https://hub.docker.com/_/node)
 `VERSION_REVEAL`   | 3.8.0   | [reveal.js version](https://github.com/hakimel/reveal.js/releases)
 `VERSION_MATHJAX`  | 2.7.7   | [MathJax version](https://github.com/mathjax/MathJax-src/releases)
 

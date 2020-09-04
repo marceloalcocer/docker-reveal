@@ -50,7 +50,7 @@ RUN apk add --no-cache --virtual \
 RUN	\
 	   cd reveal.js \
 	&& npm install \
-	&& ln -s node_modules/grunt-cli/bin/grunt
+	&& ln -s node_modules/gulp/bin/gulp.js gulp
 
 # De-escalate permissions
 RUN chown -R node:node reveal.js
@@ -79,4 +79,4 @@ WORKDIR reveal.js
 EXPOSE 8000
 
 # Serve
-ENTRYPOINT ["./grunt", "serve"]
+ENTRYPOINT ["./gulp", "serve"]

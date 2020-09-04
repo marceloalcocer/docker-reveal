@@ -7,13 +7,11 @@
 
 # Source fetch stage
 # -------------------
-ARG VERSION_ALPINE=3.11
+ARG VERSION_ALPINE=3.12
 FROM alpine:$VERSION_ALPINE as fetch
 
 # Image arguments
-ARG VERSION_REVEAL=3.8.0
 ARG VERSION_MATHJAX=2.7.7
-# ARG VERSION_MATHJAX=3.0.0                                     # Requires build
 ARG REPO_REVEAL=https://github.com/hakimel/reveal.js
 ARG REPO_MATHJAX=https://github.com/mathjax/MathJax
 
@@ -44,7 +42,7 @@ COPY --from=fetch reveal.js reveal.js
 # Install build dependencies
 RUN apk add --no-cache --virtual \
 		make \
-		python
+		python3
 
 # Build and install dependencies
 RUN	\

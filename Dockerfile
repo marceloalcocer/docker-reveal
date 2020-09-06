@@ -52,9 +52,6 @@ RUN	\
 	&& npm install \
 	&& ln -s node_modules/gulp/bin/gulp.js gulp
 
-# De-escalate permissions
-RUN chown -R node:node reveal.js
-
 
 # Package stage
 # --------------
@@ -68,6 +65,9 @@ LABEL MathJax="https://github.com/mathjax/MathJax"
 
 # Copy runtime dependencies
 COPY --from=build reveal.js reveal.js
+
+# De-escalate permissions
+RUN chown -R node:node reveal.js
 
 # Set user
 USER node
